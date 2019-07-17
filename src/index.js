@@ -7,7 +7,7 @@ import { BrowserRouter as Router} from "react-router-dom";
 import {RoomProvider} from './context';
 ReactDOM.render(
     <RoomProvider>
-        <Router>
+        <Router basename="/Beach-Resort-React/">
             <App />
         </Router>
     </RoomProvider>
