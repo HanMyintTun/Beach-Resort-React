@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import items from './data';
+//import items from './data';
+import Client from './Contentful';
+
 
 const RoomContext = React.createContext();
 // <RoomContext.Provider value={}
@@ -20,25 +22,55 @@ class RoomProvider extends Component {
         breakfast:false,
         pets: false
     }
-    // getData{}
 
-    componentDidMount(){
-        let rooms = this.formatData(items)
-        //console.log(rooms);
-        let featuredRooms = rooms.filter(room => room.featured === true);
-        let maxPrice = Math.max(...rooms.map(item=> item.price));
-        let maxSize = Math.max(...rooms.map(item=> item.size));
-        this.setState({
-            rooms,
-            featuredRooms,
-            sortedRooms: rooms,
-            loading: false,
-            price: maxPrice,
-            maxPrice,
-            maxSize
-            //type
-        })
+    // getData (contentful api)
+    getData = async () => {
+        try{
+            let response = await Client.getEntries({
+                content_type: 'beachResortRoom',
+                order: "sys.createdAt"
+            });
+            //console.log(response)
+            let rooms = this.formatData(response.items)
+       
+            let featuredRooms = rooms.filter(room => room.featured === true);
+            let maxPrice = Math.max(...rooms.map(item=> item.price));
+            let maxSize = Math.max(...rooms.map(item=> item.size));
+            this.setState({
+                rooms,
+                featuredRooms,
+                sortedRooms: rooms,
+                loading: false,
+                price: maxPrice,
+                maxPrice,
+                maxSize
+            
+            })
+        }catch(error){
+            console.log(error);
+        }
     }
+
+    
+    componentDidMount(){
+        this.getData();//get data from contentful
+        //get data from local json *** 
+        // let rooms = this.formatData(items)
+
+        // let featuredRooms = rooms.filter(room => room.featured === true);
+        // let maxPrice = Math.max(...rooms.map(item=> item.price));
+        // let maxSize = Math.max(...rooms.map(item=> item.size));
+        // this.setState({
+        //     rooms,
+        //     featuredRooms,
+        //     sortedRooms: rooms,
+        //     loading: false,
+        //     price: maxPrice,
+        //     maxPrice,
+        //     maxSize
+           
+        // })
+     }
 
     handelChange = event =>{
         const target = event.target;
