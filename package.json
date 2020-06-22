@@ -1,7 +1,7 @@
 {
   "name": "resort",
   "version": "0.1.0",
-  "homepage": "https://HanMyintTun.github.io/Beach-Resort-React",
+  "homepage": "/",
   "private": true,
   "dependencies": {
     "contentful": "^7.8.2",
