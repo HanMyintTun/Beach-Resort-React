@@ -1,4 +1,4 @@
-##DEMO
+## DEMO
 https://hanmyinttun.github.io/Beach-Resort-React/
 
 
